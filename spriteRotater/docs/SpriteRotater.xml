@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class name="SpriteRotater" category="Modules">
+    <brief_description>
+        Gives tools to rotate sprites according to camera rotation.
+    </brief_description>
+    <description>
+        A utility class that can rotate Sprites with a camera that rotates constantly. Could also be used with a static camera as well with the rotation() function. rotationOffset() rotates the sprites differently based on the angle (rot) passed in. Assumes that frames are based on a trig chart (int, deg): [(0,0), (1,45), (2,90), (3, 135), (4, 180), (5,225), (6,270), (7,315)]
+    </description>
+    <methods>
+        <method name="rotationOffset">
+            <argument index="0" name="rot" type="float">
+            </argument>
+			<argument index="1" name="frame" type="int">
+            </argument>
+            <description>
+				Used to offset the sprite based on the rotation of the game's camera (rot). Pass in your current directional Sprite frame (0 - 7). If you are using an isometric animation, use this to select which row of the animation you are animating. Assumes frames are following the Trig Chart (frame : int, deg : float): [(0,0), (1,45), (2,90), (3, 135), (4, 180), (5,225), (6,270), (7,315)]. Offsets a frame number based on the angle passed in. 180 degrees will offset by 4 for instance while 90 degrees will offset by 2.
+            </description>
+        </method>
+        <method name="frameChanger">
+            <argument index="0" name="frame" type="int">
+            </argument>
+			<argument index="1" name="subtractor" type="int">
+            </argument>
+			<argument index="2" name="minFrame" type="int">
+            </argument>
+			<argument index="3" name="maxFrame" type="int">
+            </argument>
+            <description>
+				Offsets the frame given to it by the subtractor's amount. If the subtractor is greater than minFrame, then the remainder of what is left is subtracted from the maxFrame. Used within rotationOffset.
+            </description>
+        </method>
+		<method name="getRotation">
+            <argument index="0" name="rotation" type="float">
+            </argument>
+            <description>
+				Gets the absolute value angle. If the angle is less than 0, the angle returned is 360 degrees minus that angle.
+            </description>
+        </method>
+		<method name="rotater">
+            <argument index="0" name="vec" type="Vector3">
+            </argument>
+            <description>
+				The vector passed in dictates which frame is returned. Should be normalized. Assumes frames are following the Trig Chart (frame : int, deg : float): [(0,0), (1,45), (2,90), (3, 135), (4, 180), (5,225), (6,270), (7,315)]. If a KinematicBody is moving NorthWest (or at a 135 degree angle), that is a frame of 3. Returns different frames based on where the observer is standing (i.e. the Player's Camera) on the x-axis. The observer being at a greater x-axis value will yield different results than if the observer is at a lower x-axis value.
+            </description>
+        </method>
+		<method name="get2DVectorFrame">
+			<argument index="0" name="vec" type="Vector2">
+            </argument>
+			<description>
+				Pass a non-normalized directional Vector2 in with a max value of Vector2(1,1) and a min value of Vector2(-1,-1) and return the corresponding frame based on the following the Trig Chart (frame : int, deg : float): [(0,0), (1,45), (2,90), (3, 135), (4, 180), (5,225), (6,270), (7,315)].
+			</description>
+		</method>
+		<method name="get3DVectorFrame">
+			<argument index="0" name="vec" type="Vector3">
+            </argument>
+			<description>
+				Pass a non-normalized directional Vector3 in with a max value of Vector3(1,0,1) and a min value of Vector3(-1,0,-1) and return the corresponding frame based on the following the Trig Chart (frame : int, deg : float): [(0,0), (1,45), (2,90), (3, 135), (4, 180), (5,225), (6,270), (7,315)].
+			</description>
+		</method>
+		<method name="get2DFrameVector">
+			<argument index="0" name="frame" type="int">
+            </argument>
+			<description>
+				Returns a Vector2 and assumes the frame passed in is based on the following the Trig Chart (frame : int, deg : float): [(0,0), (1,45), (2,90), (3, 135), (4, 180), (5,225), (6,270), (7,315)]. For instance, a frame of 1 will return a Vector2(1,-1) (which is northeast or PI/4) and a frame of 4 will return a Vector2(-1,0.1) (which is west or PI).
+			</description>
+		</method>
+		<method name="get3DFrameVector">
+			<argument index="0" name="frame" type="int">
+            </argument>
+			<description>
+				Returns a Vector3 and assumes the frame passed in is based on the following the Trig Chart (frame : int, deg : float): [(0,0), (1,45), (2,90), (3, 135), (4, 180), (5,225), (6,270), (7,315)]. For instance, a frame of 3 will return a Vector3(-1,0,1) (which is northwest or (3 * PI)/4) and a frame of 6 will return a Vector3(0.1,0,-1) (which is south or (3 * PI)/2).
+			</description>
+		</method>
+		<method name="adjustFrame">
+			<argument index="0" name="dir" type="Vector3">
+            </argument>
+			<argument index="1" name="frame" type="int">
+            </argument>
+			<argument index="2" name="rotation" type="float">
+            </argument>
+			<argument index="3" name="subtractor" type="int">
+            </argument>
+			<description>
+				Use this to correct the appearance of your Sprite3D. Adjusts the frame (frame : int) for both the movement of the Sprite in relation to an observer (dir : Vector3) and the rotation of the camera (rotation : float). The subtractor : int is the offset to fix in case you have a different starting point on the trig chart apart from the Trig Chart (frame : int, deg : float): [(0,0), (1,45), (2,90), (3, 135), (4, 180), (5,225), (6,270), (7,315)]. 
+			</description>
+		</method>
+		<method name="setPerpendicular">
+			<argument index="0" name="vec" type="Vector3">
+            </argument>
+			<argument index="1" name="dir" type="int">
+            </argument>
+			<description>
+				Moves a vector perpindicularly from its original (or intended) direction. If the vector is moving straight towards something, they will veer off in a 90 degree angle. The dir : int is used to determine whether the change is either -90 (dir == 0) degrees or +90 (dir == 1) degrees from the original intended direction.
+			</description>
+		</method>
+		<method name="setDiagonal">
+			<argument index="0" name="vec" type="Vector3">
+            </argument>
+			<argument index="1" name="dir" type="int">
+            </argument>
+			<argument index="2" name="norm" type="bool">
+            </argument>
+			<description>
+				Gets the average of a perpendicular vector and an intended vector to return a diagonal vector. If the vector is moving straight towards something, they will veer off in a 45 degree angle. The dir : int is used to determine whether the change is either -45 (dir == 0) degrees or +45 (dir == 1) degrees from the original intended direction. If norm is true, then the vector is returned normalized.
+			</description>
+		</method>
+		<method name="setDiagonal3D">
+			<argument index="0" name="vec" type="Vector3">
+            </argument>
+			<argument index="1" name="dir" type="int">
+            </argument>
+			<argument index="2" name="axis" type="int">
+            </argument>
+			<argument index="3" name="norm" type="bool">
+            </argument>
+			<description>
+				Gets the average of a perpendicular vector and an intended vector to return a diagonal vector. Pass in an axis to switch for different directions (0 == x and y, 1 == x and z, 2 == y and z). If the vector is moving straight towards something, they will veer off in a 45 degree angle based on the axis : int (which axes are swapped) and the dir : int which is used to determine whether the change is either -45 (dir == 0) degrees or +45 (dir == 1) degrees from the original intended direction. If norm is true, then the vector is returned normalized.
+			</description>
+		</method>
+		<method name="setPerpendicular3D">
+			<argument index="0" name="vec" type="Vector3">
+            </argument>
+			<argument index="1" name="dir" type="int">
+            </argument>
+			<argument index="2" name="axis" type="int">
+            </argument>
+			<description>
+				Moves a vector perpindicularly from its original (or intended) direction. Pass in an axis to switch for different directions (0 == x and y, 1 == x and z, 2 == y and z). If the vector is moving straight towards something, they will veer off in a 90 degree angle based on the axis : int (which axes are swapped) and the dir : int which is used to determine whether the change is either -90 (dir == 0) degrees or +90 (dir == 1) degrees from the original intended direction.
+			</description>
+		</method>
+    </methods>
+    <members>
+        <member name="global_position" type="Vector2" setter="set_global_position" getter="get_global_position" brief="">
+        </member>
+        <member name="z_as_relative" type="bool" setter="set_z_as_relative" getter="is_z_relative" brief="">
+        </member>
+    </members>
+    <constants>
+    </constants>
+</class>
