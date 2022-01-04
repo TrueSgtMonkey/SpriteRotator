@@ -15,6 +15,10 @@ class SpriteRotater : public Reference
 	GDCLASS(SpriteRotater, Reference);
 	
 	float distance(Vector3 vec);
+	float angles[3] = { 22.5, 67.5, 90 };
+	//	# Our angle derived from our vector passed in
+	float ang = 0.0;
+	int frame = 0;
 	enum direction {EAST, NORTHEAST, NORTH, NORTHWEST, 
 					WEST, SOUTHWEST, SOUTH, SOUTHEAST};
 	

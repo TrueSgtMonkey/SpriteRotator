@@ -76,16 +76,12 @@ float SpriteRotater::getRotation(float rotation)
 */
 int SpriteRotater::rotater(Vector3 vec)
 {
-	//# Easier to play around with the values this way
-	//	# Our array of angles to watch out for
-	float angles[] = { 22.5, 67.5, 90 };
-	//	# Our angle derived from our vector passed in
-	float ang = 0.0;
+	ang = 0.0;
 	//	# WARNING : will crash the game if z is ever 0
 	//  WARNING: doesn't work at perfect 90 degree angles
 	if(vec.z != 0)
 		ang = Math::rad2deg(atan(vec.x / vec.z));
-	int frame = 0;
+	frame = 0;
 	if (vec.x < 0)
 	{
 		//# We are below the sprite on x-axis
